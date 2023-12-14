@@ -278,6 +278,7 @@ class EndpointConfiguration:
                 "timeout must be a non-negative number"
             )
 
+RequestFiles = Union[Mapping[str, FileTypes], Sequence[Tuple[str, FileTypes]]]
 
 @dataclasses.dataclass
 class RawRequest:
@@ -297,6 +298,7 @@ class RawRequest:
     cookies: Dict[str, str] = dataclasses.field(default_factory=dict)
     json: Dict[str, Any] = dataclasses.field(default_factory=dict)
     data: Dict[str, Any] = dataclasses.field(default_factory=dict)
+    files: Dict[str, bytes] | list[tuple[str, bytes]] = dataclasses.field(default_factory=dict)
     timeout: Optional[float] = None
     _gql: Optional[GraphQLConfiguration] = None
 
@@ -357,4 +359,5 @@ class RawRequest:
             cookies=self.cookies if self.cookies else None,
             json=_json if _json else None,
             data=self.data if self.data else None,
+            files=self.files if self.files else None
         )

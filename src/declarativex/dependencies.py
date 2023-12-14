@@ -44,6 +44,7 @@ class Location(str, enum.Enum):
     json = "json"
     timeout = "timeout"
     data = "data"
+    files = "files"
 
 
 class Dependency(abc.ABC):
@@ -188,6 +189,13 @@ class FormField(Dependency):
 
     _http_method_whitelist = ["POST", "PUT", "PATCH"]
     location = Location.data
+
+
+class FormFileField(Dependency):
+    """Dependency for form file fields."""
+
+    _http_method_whitelist = ["POST", "PUT", "PATCH"]
+    location = Location.files
 
 
 class FullReplacementDependency(Dependency):
